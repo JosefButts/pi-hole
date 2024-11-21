@@ -1,10 +1,11 @@
+#!/bin/bash
 
 # Remove conflicting packages
-for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
-# setup docker
+DEBIAN_FRONTEND=noninteractive sudo apt-get remove -y docker.io docker-doc docker-compose podman-docker containerd runc
 
-sudo apt-get update
-sudo apt-get install ca-certificates curl
+# Setup docker
+sudo apt-get update -y
+sudo apt-get install -y ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/raspbian/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
@@ -14,7 +15,10 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/raspbian \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
+sudo apt-get update -y
 
- sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
- sudo docker run hello-world
+# Install docker
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Test docker
+sudo docker run hello-world
