@@ -1,3 +1,6 @@
+
+# Remove conflicting packages
+for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
 # setup docker
 
 sudo apt-get update
